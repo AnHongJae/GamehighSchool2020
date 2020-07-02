@@ -7,25 +7,25 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-
     public float m_speed = 5f;
-    public float m_DestroyCooltime =  5f ;
-
+    public float m_DestroyCooltime = 5f;
     // Update is called once per frame
     void Update()
     {
-        Rigidbody Rigidbody = /*Gameobject*/ GetComponent<Rigidbody>();
+        Rigidbody rigidibody = /*gameObject*/GetComponent<Rigidbody>();
 
-        
-        Rigidbody.AddForce(transform.forward * m_speed);
 
-        m_DestroyCooltime -= Time.deltaTime;
+        rigidibody.AddForce(transform.forward * m_speed);
+
+        m_DestroyCooltime = m_DestroyCooltime - Time.deltaTime;
 
         if (m_DestroyCooltime <= 0)
-            gameObject.SetActive(false);
+            Destroy(gameObject);
+
+
 
 
     }
@@ -37,8 +37,7 @@ public class Bullet : MonoBehaviour
             var player = other.attachedRigidbody.GetComponent<PlayerController>();
             player.Die();
         }
+
+
     }
-
-
-
 }
