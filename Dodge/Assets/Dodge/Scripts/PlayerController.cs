@@ -4,56 +4,32 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float m_speed = 15f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameManager m_GameManager;
 
+    public float m_Speed = 25f;
     // Update is called once per frame
     void Update()
     {
-        Rigidbody Rigidbody = /*Gameobject*/ GetComponent<Rigidbody>();
+        //주석 : 설명 필요없는 스크립트를 임시적으로 비활성화하기 위해서 사용
+        /* 주석 */
+        Rigidbody rigidbody = /*gameObject.*/GetComponent<Rigidbody>();
 
         float xAxis = Input.GetAxis("Horizontal");
         float yAxis = Input.GetAxis("Vertical");
 
-        float fire = Input.GetAxis("Fire1");
-
-        Rigidbody.AddForce(new Vector3(xAxis, 0, yAxis) * m_speed);
+        rigidbody.AddForce(new Vector3(xAxis, 0, yAxis) * m_Speed);
 
 
-        if (fire >0.5f) Die();
+        //정답
+        //float fireAxis = Input.GetAxis("Fire1");
 
-        //if (Input.GetAxis("Horizontal");
-        //{
-        //    //transform.position += Vector3.left * m_speed * Time.deltaTime;
-        //    Rigidbody.AddForce(Vector3.left * m_speed);
-        //}
-        //else if (Input.GetKey(KeyCode.RightArrow))
-        //{
-        //    Rigidbody.AddForce(Vector3.right* m_speed);
-        //}
-        //else if (Input.GetKey(KeyCode.UpArrow))
-        //{
-        //    Rigidbody.AddForce(Vector3.forward * m_speed);
-        //}
-        //else if (Input.GetKey(KeyCode.DownArrow))
-        //{
-        //    Rigidbody.AddForce(Vector3.back * m_speed);
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.Space))
-            //Die();
+        //if (fireAxis > 0.95f)
+        //    Die();
     }
-     public void Die()
-{
-    Debug.Log("사망");
-    gameObject.SetActive(false);
+
+    public void Die()
+    {
+        Debug.Log("사망");
+        m_GameManager.GameOver();
+    }
 }
-
-
-}
-
-
