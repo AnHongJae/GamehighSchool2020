@@ -613,7 +613,7 @@ MonoBehaviour:
   - {fileID: 441813544}
   - {fileID: 1256239421}
   - {fileID: 463168820}
-  m_IsPlaying: 0
+  m_IsPlaying: 1
   m_Score: 0
 --- !u!4 &564383130
 Transform:

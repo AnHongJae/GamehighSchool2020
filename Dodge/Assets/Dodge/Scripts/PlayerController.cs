@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public GameManager m_GameManager;
 
-    public float m_Speed = 25f;
+    public float m_Speed = 8f;
     // Update is called once per frame
     void Update()
     {
@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
         float yAxis = Input.GetAxis("Vertical");
 
         rigidbody.AddForce(new Vector3(xAxis, 0, yAxis) * m_Speed);
+
+
+        
 
 
         //정답
