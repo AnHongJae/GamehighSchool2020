@@ -13,6 +13,11 @@ public class BulletSpawner : MonoBehaviour
     public float m_AttackInterval = 1f;
     private float m_AttackCooltime = 0f;
 
+
+   private void GameStart()
+    {
+        //gameObject.SetActive(false);
+    }
     // Update is called once per frame
     void Update()
     {

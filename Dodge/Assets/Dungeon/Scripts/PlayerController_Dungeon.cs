@@ -49,7 +49,7 @@ public class PlayerController_Dungeon : MonoBehaviour
     public void Die()
     {
         Debug.Log("사망");
-        gameObject.transform.position = new Vector3(18, 1, -18);
-        //D_GameManager.GameOver();
+        GameManager_Dungeon gameManager = FindObjectOfType<GameManager_Dungeon>();
+        gameManager.ReturnToStartPoint();
     }
 }
