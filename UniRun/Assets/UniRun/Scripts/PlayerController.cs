@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
         if(collision.collider.tag == "Ground")
         {
             m_IsGround = true;
+            m_JumpCount = 0;
         }
     }
 
@@ -59,6 +60,9 @@ public class PlayerController : MonoBehaviour
 
             //나중에 GameManager에 사망처리 요청
             GameManager.Instance.OnplayerDead();
+
+            m_AudioSource.clip = m_Die;
+            m_AudioSource.Play();
         }
     }
 
