@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float m_Speed = 2f;
+    public float m_Speed = 9f;
 
     public float DeathTime = 5f;
 
@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
 
         DeathTime += Time.deltaTime;
 
-        if (DeathTime >= 2)
+        if (DeathTime >= 6)
         {
             Destroy(gameObject);
             DeathTime = 0;
