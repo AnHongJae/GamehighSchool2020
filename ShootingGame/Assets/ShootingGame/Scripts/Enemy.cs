@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public float m_Speed = 10f;
     public float AttackTime = 0f;
 
+
     public bool isDead;
 
     public GameObject m_Bullet;
@@ -33,14 +34,20 @@ public class Enemy : MonoBehaviour
         if (collision.tag == "Player_Bullet")
         {
             m_Animator.SetBool("Die", true);
+
             isDead = true;
+
         }
     }
 
     public void Die()
     {
         Destroy(gameObject);
+        GameManager.Instance.OnAddScore();
+
     }
+
+
 
 
 }

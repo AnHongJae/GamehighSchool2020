@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public GameObject m_Bullet;
     public float CreatTime = 0f;
 
-    public bool isDead;
+    public bool isDead = false;
 
 
     void Update()
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
 
         CreatTime += Time.deltaTime;
-        if (CreatTime > 0.5 && Input.GetKey(KeyCode.Space))
+        if (CreatTime > 0.3 && Input.GetKey(KeyCode.Space))
         {
             var gabj = GameObject.Instantiate(m_Bullet);
             gabj.transform.position = transform.position + new Vector3(0, 4, 0);
@@ -52,21 +52,15 @@ public class Player : MonoBehaviour
         {
             m_Animator.SetBool("Die", true);
             isDead = true;
+
+            GameManager.Instance.OnplayerDead();
+
         }
     }
 
     public void Die()
     {
         Destroy(gameObject);
+
     }
-
-
-
-
-
-
-
-
-
-
 }
