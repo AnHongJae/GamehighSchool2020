@@ -22,6 +22,8 @@ public class RedCube : MonoBehaviour
     {
         GameManager.Instance.AddScore();
         Destroy(gameObject);
+        GameManager.Instance.AddTime();
+
     }
 
     private void OnTriggerEnter(Collider other)

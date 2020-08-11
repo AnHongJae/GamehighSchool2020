@@ -1,12 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    public SpawnCube m_CubeSpawner;
 
     public int m_Life = 3;
     public int m_Score = 0;
@@ -27,6 +31,24 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         time -= Time.deltaTime;
+        TimeUi.text = "남은시간" + time;
+        if (time < 0)
+        {
+            GameOverUI.gameObject.SetActive(true);
+            Time.timeScale = 0.0f;
+            ScoreUI.gameObject.SetActive(false);
+        }
+
+        ScoreUI.text = "SCORE: " + m_Score;
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        }
+
+
+
 
     }
 
@@ -36,6 +58,13 @@ public class GameManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        m_CubeSpawner.SpawnStart();
+    }
+
+    public void AddTime()
+    {
+        time++;
     }
     public void AddScore()
     {
@@ -47,9 +76,14 @@ public class GameManager : MonoBehaviour
         m_Life--;
         if(m_Life <= 0)
         {
-            //GameOver;
+            GameOverUI.gameObject.SetActive(true);
+            m_CubeSpawner.gameObject.SetActive(false);
         }
     }
+
+
+
+
 
 
 }

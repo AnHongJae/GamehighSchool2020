@@ -22,6 +22,8 @@ public class BlueCube : MonoBehaviour
     {
         GameManager.Instance.DamageLife();
         Destroy(gameObject);
+
+        GameManager.Instance.AddTime();
     }
 
     private void OnTriggerEnter(Collider other)
