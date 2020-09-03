@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour//, IEatable
 {
     public Animator m_Animator;
 
@@ -141,6 +141,12 @@ public class Player : MonoBehaviour
         {
             m_IsTouchLadder = true;
         }
+        else if(collision.tag == "Item")
+        {
+            var item = collision.GetComponent<ItemComponet>();
+            if(item != null)
+            item.BeAte(this);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -154,4 +160,13 @@ public class Player : MonoBehaviour
     }
 
 
+    public void LevelUp()
+    {
+        m_Speed++;
+    }
+
+    public void EatEvent()
+    {
+        LevelUp();
+    }
 }
