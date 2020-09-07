@@ -11,6 +11,7 @@ public class Player : MonoBehaviour//, IEatable
 
 
     public bool Jump;
+    public bool m_IsDead = false;
 
     public bool m_IsClimbing = false;
     public bool m_IsTouchLadder = false;
@@ -26,6 +27,9 @@ public class Player : MonoBehaviour//, IEatable
 
     void Update()
     {
+
+        if (m_IsDead) return;
+
         float MoveX = Input.GetAxis("Horizontal");
         float MoveY = Input.GetAxis("Vertical");
 
@@ -132,8 +136,28 @@ public class Player : MonoBehaviour//, IEatable
         if (collision.gameObject.tag == "Ground")
         {
             Jump = true;
+
+
+
+        }
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+            {
+                Jump = true;
+
+                if (contact.rigidbody)
+                {
+                    var hp = contact.rigidbody.GetComponent<HPComponent>();
+                    if (hp)
+                    {
+                        Destroy(hp.gameObject);
+                    }
+                }
+            }
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -146,6 +170,14 @@ public class Player : MonoBehaviour//, IEatable
             var item = collision.GetComponent<ItemComponet>();
             if(item != null)
             item.BeAte(this);
+        }
+
+        if (collision.tag == "DeadZone")
+        {
+            m_IsDead = true;
+
+            GameManager.Instance.OnplayerDead();
+
         }
     }
 
@@ -160,6 +192,8 @@ public class Player : MonoBehaviour//, IEatable
     }
 
 
+
+
     public void LevelUp()
     {
         m_Speed++;
@@ -169,4 +203,8 @@ public class Player : MonoBehaviour//, IEatable
     {
         LevelUp();
     }
+
+
+
+
 }
