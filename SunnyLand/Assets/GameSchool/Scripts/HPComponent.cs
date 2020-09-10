@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class HPComponent : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public UnityEvent m_OntakeDamage;
+
+
+    public virtual void TakeDamage(int damage)
     {
-        
+        m_OntakeDamage.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void DestroySelf()
     {
-        
+        Destroy(gameObject);
     }
+
 }

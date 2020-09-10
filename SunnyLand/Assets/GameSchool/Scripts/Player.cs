@@ -151,9 +151,18 @@ public class Player : MonoBehaviour//, IEatable
                     var hp = contact.rigidbody.GetComponent<HPComponent>();
                     if (hp)
                     {
-                        Destroy(hp.gameObject);
+                        //Destroy(hp.gameObject);
+                        hp.TakeDamage(10);
                     }
                 }
+            }
+            else if(contact.rigidbody && contact.rigidbody.tag == "Enemy")
+            {
+                var hp = GetComponent<HPComponent>();
+                hp.TakeDamage(10);
+
+                m_Rigidbody2D.velocity = Vector2.zero;
+                m_Rigidbody2D.AddForce(Vector2.left * 10000f);
             }
         }
     }
