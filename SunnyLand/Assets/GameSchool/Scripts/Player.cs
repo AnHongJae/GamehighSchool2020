@@ -15,6 +15,7 @@ public class Player : MonoBehaviour//, IEatable
 
     public bool m_IsClimbing = false;
     public bool m_IsTouchLadder = false;
+    //public bool m_HitRecoveringTime;
 
     public float m_ClimbSpeed = 2f;
 
@@ -156,14 +157,19 @@ public class Player : MonoBehaviour//, IEatable
                     }
                 }
             }
-            else if(contact.rigidbody && contact.rigidbody.tag == "Enemy")
-            {
-                var hp = GetComponent<HPComponent>();
-                hp.TakeDamage(10);
+            //else if(contact.rigidbody && contact.rigidbody.tag == "Enemy")
+            //{
+            //    //피격시 무적
+            //    if (m_HitRecoveringTime <= 0)
+            //    {
+            //        var hp = GetComponent<HPComponent>();
+            //        hp.TakeDamage(10);
+            //        m_HitRecoveringTime = 1;
+            //    }
 
-                m_Rigidbody2D.velocity = Vector2.zero;
-                m_Rigidbody2D.AddForce(Vector2.left * 10000f);
-            }
+            //    m_Rigidbody2D.velocity = Vector2.zero;
+            //    m_Rigidbody2D.AddForce(Vector2.left * 10000f);
+            //}
         }
     }
 
