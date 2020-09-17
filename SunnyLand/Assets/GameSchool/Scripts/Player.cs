@@ -18,7 +18,16 @@ public class Player : MonoBehaviour//, IEatable
     //public bool m_HitRecoveringTime;
 
     public float m_ClimbSpeed = 2f;
+    public float m_HitRecoveringTime;
 
+    public VariableJoystick m_Joystick;
+
+    private bool m_InputJump = false;
+
+    public void jump()
+    {
+        m_InputJump = true;
+    }
 
     void Start()
     {
@@ -34,7 +43,13 @@ public class Player : MonoBehaviour//, IEatable
         float MoveX = Input.GetAxis("Horizontal");
         float MoveY = Input.GetAxis("Vertical");
 
+        MoveX += m_Joystick.Horizontal;
+        MoveY += m_Joystick.Vertical;
 
+        var inputJump = m_InputJump;
+        m_InputJump = false;
+
+        m_HitRecoveringTime -= Time.deltaTime;
 
         if (m_IsTouchLadder && Mathf.Abs(MoveY)> 0.5f)
         {
@@ -67,7 +82,7 @@ public class Player : MonoBehaviour//, IEatable
 
             if (Jump)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if ((Input.GetKeyDown(KeyCode.Space)|| inputJump) && Jump)
                 {
                     Rigidbody2D rd = GetComponent<Rigidbody2D>();
                     rd.AddForce(Vector3.up * 550f);
@@ -87,7 +102,7 @@ public class Player : MonoBehaviour//, IEatable
 
             transform.position += movement;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space)|| inputJump)
             {
                 ClimbingExit();
             }
@@ -96,27 +111,6 @@ public class Player : MonoBehaviour//, IEatable
         }
 
 
-
-
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-
-    if (Jump) {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Rigidbody2D rd = GetComponent<Rigidbody2D>();
-                rd.AddForce(Vector3.up * 550f);
-
-                Jump = false;
-            }
-        }
 
 
 
@@ -157,19 +151,19 @@ public class Player : MonoBehaviour//, IEatable
                     }
                 }
             }
-            //else if(contact.rigidbody && contact.rigidbody.tag == "Enemy")
-            //{
-            //    //피격시 무적
-            //    if (m_HitRecoveringTime <= 0)
-            //    {
-            //        var hp = GetComponent<HPComponent>();
-            //        hp.TakeDamage(10);
-            //        m_HitRecoveringTime = 1;
-            //    }
+            else if (contact.rigidbody && contact.rigidbody.tag == "Enemy")
+            {
+                //피격시 무적
+                if (m_HitRecoveringTime <= 0)
+                {
+                    var hp = GetComponent<HPComponent>();
+                    hp.TakeDamage(10);
+                    m_HitRecoveringTime = 1;
+                }
 
-            //    m_Rigidbody2D.velocity = Vector2.zero;
-            //    m_Rigidbody2D.AddForce(Vector2.left * 10000f);
-            //}
+                m_Rigidbody2D.velocity = Vector2.zero;
+                m_Rigidbody2D.AddForce(Vector2.left * 10000f);
+            }
         }
     }
 

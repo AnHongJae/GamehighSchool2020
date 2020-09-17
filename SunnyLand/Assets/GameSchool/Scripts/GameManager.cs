@@ -12,20 +12,43 @@ public class GameManager : MonoBehaviour
     public bool m_IsPlaying;
 
     public static GameManager Instance;
+
+    public JoinAnim m_JointArm;
+    public GameObject m_Player;
+    public Transform m_StartPoint;
+
+    public VariableJoystick m_Joystic;
+
+    public bool IsPlaying;
+
+
+    public UnityEngine.UI.Button m_JumpButton;
     public void Awake()
     {
         if (GameManager.Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
+
+        GameStart();
     }
-    public void Start()
+    public void GameStart()
     {
         m_Items.AddRange(FindObjectsOfType<ItemComponet>());
+        var playerInstantiate= Instantiate(m_Player, m_StartPoint.position, m_StartPoint.rotation);
+
+        playerInstantiate.GetComponent<HPComponent>().m_OnDie.AddListener(GameOver);
+        
+        m_JointArm.m_Target = playerInstantiate.transform;
+
+        var playercontroller = playerInstantiate.GetComponent<Player>();
+        playercontroller.m_Joystick = m_Joystic;
 
 
         m_ScoreUI.text
             = string.Format("SCORE:{0}", m_Score);
+
+        m_JumpButton.onClick.AddListener(playercontroller.jump);
     }
 
     public bool m_IsGameOver = false;
@@ -61,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
         if (result)
         {
-            m_IsPlaying = false;
+            m_IsPlaying = false;    
             GameClear();
         }
 
@@ -78,6 +101,10 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public  void GameOver()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
 
 }
-
